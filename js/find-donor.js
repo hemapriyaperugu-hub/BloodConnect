@@ -71,7 +71,7 @@ async function searchDonors() {
 
         // Get donors from database
         let response =
-            await fetch("http://localhost:5000/api/donors");
+    await fetch("https://bloodconnect-backend-xk8k.onrender.com/api/donors");
 
         let data = await response.json();
 
