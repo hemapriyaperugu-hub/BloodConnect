@@ -83,7 +83,7 @@ donorForm.addEventListener("submit", async function(event) {
 
     try {
 
-        let response = await fetch("https://bloodconnect-h8la.onrender.com/api/donors", {
+        let response = await fetch("https://bloodconnect-backend-xk8k.onrender.com/api/donors", {
 
             method: "POST",
 

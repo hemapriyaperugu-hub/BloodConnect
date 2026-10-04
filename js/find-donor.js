@@ -11,7 +11,7 @@ async function displayDonors() {
     try {
 
         let response =
-            await fetch("https://bloodconnect-h8la.onrender.com/api/donors");
+            await fetch("https://bloodconnect-backend-xk8k.onrender.com/api/donors");
 
         let data = await response.json();
 
