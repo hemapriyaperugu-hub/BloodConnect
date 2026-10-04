@@ -3,16 +3,24 @@
 showDashboard();
 
 
+// Backend URL
+const API_URL =
+    "https://bloodconnect-backend-xk8k.onrender.com/api/donors";
+
+
 // Get donors from database
 async function showDashboard() {
 
     try {
 
-        let response = await fetch("https://bloodconnect-backend-xk8k.onrender.com/api/donors");
+        let response =
+            await fetch(API_URL);
 
-        let data = await response.json();
+        let data =
+            await response.json();
 
-        let donors = data.donors;
+        let donors =
+            data.donors;
 
 
         // Total donors
@@ -26,7 +34,9 @@ async function showDashboard() {
         for (let i = 0; i < donors.length; i++) {
 
             if (donors[i].availability === "Available") {
+
                 available++;
+
             }
 
         }
@@ -40,8 +50,16 @@ async function showDashboard() {
 
         for (let i = 0; i < donors.length; i++) {
 
-            if (!bloodGroups.includes(donors[i].bloodGroup)) {
-                bloodGroups.push(donors[i].bloodGroup);
+            if (
+                !bloodGroups.includes(
+                    donors[i].bloodGroup
+                )
+            ) {
+
+                bloodGroups.push(
+                    donors[i].bloodGroup
+                );
+
             }
 
         }
@@ -55,8 +73,16 @@ async function showDashboard() {
 
         for (let i = 0; i < donors.length; i++) {
 
-            if (!cities.includes(donors[i].city)) {
-                cities.push(donors[i].city);
+            if (
+                !cities.includes(
+                    donors[i].city
+                )
+            ) {
+
+                cities.push(
+                    donors[i].city
+                );
+
             }
 
         }
@@ -73,7 +99,9 @@ async function showDashboard() {
 
         console.log(error);
 
-        document.getElementById("dashboardResults").innerHTML =
+        document.getElementById(
+            "dashboardResults"
+        ).innerHTML =
             "<p>Unable to load donors.</p>";
 
     }
@@ -81,11 +109,14 @@ async function showDashboard() {
 }
 
 
+
 // Display donor table
 function displayDonors(donors) {
 
     let result =
-        document.getElementById("dashboardResults");
+        document.getElementById(
+            "dashboardResults"
+        );
 
 
     if (donors.length === 0) {
@@ -99,34 +130,69 @@ function displayDonors(donors) {
 
 
     let table = `
+
         <table class="donor-table">
 
             <tr>
+
                 <th>Name</th>
+
                 <th>Age</th>
+
                 <th>Blood Group</th>
+
                 <th>City</th>
+
                 <th>Availability</th>
+
+                <th>Action</th>
+
             </tr>
+
     `;
 
 
     for (let i = 0; i < donors.length; i++) {
 
         table += `
+
             <tr>
 
-                <td>${donors[i].name}</td>
+                <td>
+                    ${donors[i].name}
+                </td>
 
-                <td>${donors[i].age}</td>
+                <td>
+                    ${donors[i].age}
+                </td>
 
-                <td>${donors[i].bloodGroup}</td>
+                <td>
+                    ${donors[i].bloodGroup}
+                </td>
 
-                <td>${donors[i].city}</td>
+                <td>
+                    ${donors[i].city}
+                </td>
 
-                <td>${donors[i].availability}</td>
+                <td id="availability-${donors[i]._id}">
+
+                    ${donors[i].availability}
+
+                </td>
+
+                <td>
+
+                    <button
+                        class="edit-button"
+                        onclick="editAvailability('${donors[i]._id}', '${donors[i].availability}')"
+                    >
+                        Edit
+                    </button>
+
+                </td>
 
             </tr>
+
         `;
 
     }
@@ -134,6 +200,128 @@ function displayDonors(donors) {
 
     table += "</table>";
 
+
     result.innerHTML = table;
 
 }
+
+
+
+// Edit availability
+function editAvailability(id, currentAvailability) {
+
+    const cell =
+        document.getElementById(
+            `availability-${id}`
+        );
+
+
+    cell.innerHTML = `
+
+        <select id="availability-select-${id}">
+
+            <option value="Available"
+                ${currentAvailability === "Available" ? "selected" : ""}>
+                Available
+            </option>
+
+            <option value="Unavailable"
+                ${currentAvailability === "Unavailable" ? "selected" : ""}>
+                Unavailable
+            </option>
+
+        </select>
+
+        <br>
+
+        <button
+            class="save-button"
+            onclick="saveAvailability('${id}')"
+        >
+            Save
+        </button>
+
+        <button
+            class="cancel-button"
+            onclick="showDashboard()"
+        >
+            Cancel
+        </button>
+
+    `;
+
+}
+
+
+
+// Save availability
+async function saveAvailability(id) {
+
+    const select =
+        document.getElementById(
+            `availability-select-${id}`
+        );
+
+
+    const newAvailability =
+        select.value;
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/${id}`,
+                {
+                    method: "PUT",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        availability:
+                            newAvailability
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.message ||
+                "Failed to update availability."
+            );
+
+            return;
+
+        }
+
+
+        alert(
+            "Availability updated successfully!"
+        );
+
+
+        // Reload dashboard
+        showDashboard();
+
+    }
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to update availability."
+        );
+
+    }
+
+}
+
