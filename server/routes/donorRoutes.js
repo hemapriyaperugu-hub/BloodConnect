@@ -78,7 +78,7 @@ router.put("/:id", async (req, res) => {
         // Check valid availability
         if (
             availability !== "Available" &&
-            availability !== "Unavailable"
+            availability !== "Not available"
         ) {
 
             return res.status(400).json({

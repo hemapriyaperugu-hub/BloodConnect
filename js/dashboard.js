@@ -13,11 +13,11 @@ async function showDashboard() {
 
     try {
 
-        let response = await fetch(API_URL);
+        const response = await fetch(API_URL);
 
-        let data = await response.json();
+        const data = await response.json();
 
-        let donors = data.donors;
+        const donors = data.donors;
 
 
         // Total donors
@@ -41,14 +41,12 @@ async function showDashboard() {
 
 
         // Count blood groups
-        let bloodGroups = [];
+        const bloodGroups = [];
 
         for (let i = 0; i < donors.length; i++) {
 
             if (!bloodGroups.includes(donors[i].bloodGroup)) {
-
                 bloodGroups.push(donors[i].bloodGroup);
-
             }
 
         }
@@ -58,14 +56,12 @@ async function showDashboard() {
 
 
         // Count cities
-        let cities = [];
+        const cities = [];
 
         for (let i = 0; i < donors.length; i++) {
 
             if (!cities.includes(donors[i].city)) {
-
                 cities.push(donors[i].city);
-
             }
 
         }
@@ -80,7 +76,7 @@ async function showDashboard() {
     }
     catch (error) {
 
-        console.log(error);
+        console.error("Dashboard error:", error);
 
         document.getElementById("dashboardResults").innerHTML =
             "<p>Unable to load donors.</p>";
@@ -90,10 +86,11 @@ async function showDashboard() {
 }
 
 
+
 // Display donor table
 function displayDonors(donors) {
 
-    let result =
+    const result =
         document.getElementById("dashboardResults");
 
 
@@ -108,6 +105,7 @@ function displayDonors(donors) {
 
 
     let table = `
+
         <table class="donor-table">
 
             <tr>
@@ -120,17 +118,21 @@ function displayDonors(donors) {
 
                 <th>City</th>
 
+                <th>Phone Number</th>
+
                 <th>Availability</th>
 
                 <th>Action</th>
 
             </tr>
+
     `;
 
 
     for (let i = 0; i < donors.length; i++) {
 
         table += `
+
             <tr>
 
                 <td>
@@ -149,8 +151,21 @@ function displayDonors(donors) {
                     ${donors[i].city}
                 </td>
 
+                <td>
+
+                    <a
+                        href="tel:${donors[i].phone}"
+                        class="call-button"
+                    >
+                        📞 ${donors[i].phone}
+                    </a>
+
+                </td>
+
                 <td id="availability-${donors[i]._id}">
+
                     ${donors[i].availability}
+
                 </td>
 
                 <td>
@@ -168,6 +183,7 @@ function displayDonors(donors) {
                 </td>
 
             </tr>
+
         `;
 
     }
@@ -178,6 +194,7 @@ function displayDonors(donors) {
     result.innerHTML = table;
 
 }
+
 
 
 // Edit availability
@@ -209,7 +226,7 @@ function editAvailability(id, currentAvailability) {
 
         </select>
 
-        <br>
+        <br><br>
 
         <button
             class="save-button"
@@ -228,6 +245,7 @@ function editAvailability(id, currentAvailability) {
     `;
 
 }
+
 
 
 // Save availability
