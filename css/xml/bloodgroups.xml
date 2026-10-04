@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE bloodgroups SYSTEM "bloodgroups.dtd">
+
+<bloodgroups>
+
+    <bloodgroup>
+        <name>A+</name>
+        <description>Common blood group</description>
+    </bloodgroup>
+
+    <bloodgroup>
+        <name>A-</name>
+        <description>Rare blood group</description>
+    </bloodgroup>
+
+    <bloodgroup>
+        <name>B+</name>
+        <description>Common blood group</description>
+    </bloodgroup>
+
+    <bloodgroup>
+        <name>B-</name>
+        <description>Rare blood group</description>
+    </bloodgroup>
+
+    <bloodgroup>
+        <name>AB+</name>
+        <description>Universal recipient</description>
+    </bloodgroup>
+
+    <bloodgroup>
+        <name>AB-</name>
+        <description>Rare blood group</description>
+    </bloodgroup>
+
+    <bloodgroup>
+        <name>O+</name>
+        <description>Common blood group</description>
+    </bloodgroup>
+
+    <bloodgroup>
+        <name>O-</name>
+        <description>Universal donor</description>
+    </bloodgroup>
+
+</bloodgroups>

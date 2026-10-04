@@ -1,0 +1,7 @@
+<!ELEMENT bloodgroups (bloodgroup+)>
+
+<!ELEMENT bloodgroup (name, description)>
+
+<!ELEMENT name (#PCDATA)>
+
+<!ELEMENT description (#PCDATA)>

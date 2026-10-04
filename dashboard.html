@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - BloodConnect</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+
+    <!-- Navigation Bar -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="logo">
+                🩸 BloodConnect
+            </div>
+
+            <div class="nav-links">
+
+                <a href="index.html">Home</a>
+
+                <a href="register.html">Register</a>
+
+                <a href="find-donor.html">Find Donor</a>
+
+                <a href="dashboard.html">Dashboard</a>
+
+                <a href="about.html">About</a>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- Dashboard -->
+
+    <main>
+
+        <section class="dashboard-section">
+
+            <h1>Donor Dashboard</h1>
+
+            <p class="dashboard-intro">
+                View and manage registered blood donors.
+            </p>
+
+
+            <!-- Statistics -->
+
+            <div class="statistics">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        👥
+                    </div>
+
+                    <h2 id="totalDonors">
+                        0
+                    </h2>
+
+                    <p>
+                        Total Donors
+                    </p>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ❤️
+                    </div>
+
+                    <h2 id="availableDonors">
+                        0
+                    </h2>
+
+                    <p>
+                        Available Donors
+                    </p>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        🩸
+                    </div>
+
+                    <h2 id="bloodGroups">
+                        0
+                    </h2>
+
+                    <p>
+                        Blood Groups
+                    </p>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        📍
+                    </div>
+
+                    <h2 id="cities">
+                        0
+                    </h2>
+
+                    <p>
+                        Cities
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Donor Table -->
+
+            <div class="dashboard-table-section">
+
+                <div class="table-heading">
+
+                    <h2>
+                        Registered Donors
+                    </h2>
+
+                    <a
+                        href="register.html"
+                        class="small-button"
+                    >
+                        + Add Donor
+                    </a>
+
+                </div>
+
+
+                <div id="dashboardResults">
+
+                    <!-- Donor table will be created using JavaScript -->
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        <p>
+            © 2026 BloodConnect | Online Blood Donor Registration Portal
+        </p>
+
+    </footer>
+
+
+    <script src="js/dashboard.js"></script>
+
+</body>
+
+</html>
