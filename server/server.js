@@ -5,12 +5,14 @@ require("dotenv").config();
 
 const donorRoutes = require("./routes/donorRoutes");
 
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
 app.use("/api/donors", donorRoutes);
+
 
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => {

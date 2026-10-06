@@ -16,273 +16,225 @@ async function showDashboard() {
 
         const data = await response.json();
 
+        if (!data.success) {
+            console.log("Failed to load donors");
+            return;
+        }
+
         const donors = data.donors;
 
+        const dashboardResults =
+            document.getElementById("dashboardResults");
 
-        // Total donors
+
+        // Dashboard statistics
+
         document.getElementById("totalDonors").innerText =
             donors.length;
 
 
-        // Available donors
-        let available = 0;
-
-        for (let i = 0; i < donors.length; i++) {
-
-            if (donors[i].availability === "Available") {
-                available++;
-            }
-
-        }
+        const availableDonors =
+            donors.filter(
+                donor =>
+                    donor.availability.toLowerCase() === "available"
+            );
 
         document.getElementById("availableDonors").innerText =
-            available;
+            availableDonors.length;
 
 
-        // Count blood groups
-        const bloodGroups = [];
-
-        for (let i = 0; i < donors.length; i++) {
-
-            if (!bloodGroups.includes(donors[i].bloodGroup)) {
-                bloodGroups.push(donors[i].bloodGroup);
-            }
-
-        }
+        const bloodGroups =
+            [...new Set(
+                donors.map(donor => donor.bloodGroup)
+            )];
 
         document.getElementById("bloodGroups").innerText =
             bloodGroups.length;
 
 
-        // Count cities
-        const cities = [];
-
-        for (let i = 0; i < donors.length; i++) {
-
-            if (!cities.includes(donors[i].city)) {
-                cities.push(donors[i].city);
-            }
-
-        }
+        const cities =
+            [...new Set(
+                donors.map(donor => donor.city)
+            )];
 
         document.getElementById("cities").innerText =
             cities.length;
 
 
-        // Display donors
-        displayDonors(donors);
+        // If no donors
 
-    }
-    catch (error) {
+        if (donors.length === 0) {
 
-        console.error("Dashboard error:", error);
+            dashboardResults.innerHTML = `
+                <p class="no-results">
+                    No donors registered yet.
+                </p>
+            `;
 
-        document.getElementById("dashboardResults").innerHTML =
-            "<p>Unable to load donors.</p>";
-
-    }
-
-}
+            return;
+        }
 
 
+        // Create donor table
 
-// Display donor table
-function displayDonors(donors) {
+        let tableHTML = `
 
-    const result =
-        document.getElementById("dashboardResults");
+            <table class="donor-table">
 
+                <thead>
 
-    if (donors.length === 0) {
+                    <tr>
 
-        result.innerHTML =
-            "<p>No donors registered yet.</p>";
+                        <th>Name</th>
 
-        return;
+                        <th>Age</th>
 
-    }
+                        <th>Blood Group</th>
 
+                        <th>City</th>
 
-    let table = `
+                        <th>Phone Number</th>
 
-        <table class="donor-table">
+                        <th>Availability</th>
 
-            <tr>
+                        <th>Action</th>
 
-                <th>Name</th>
+                    </tr>
 
-                <th>Age</th>
+                </thead>
 
-                <th>Blood Group</th>
-
-                <th>City</th>
-
-                <th>Phone Number</th>
-
-                <th>Availability</th>
-
-                <th>Action</th>
-
-            </tr>
-
-    `;
+                <tbody>
+        `;
 
 
-    for (let i = 0; i < donors.length; i++) {
+        for (let i = 0; i < donors.length; i++) {
 
-        table += `
+            const donor = donors[i];
 
-            <tr>
+            tableHTML += `
 
-                <td>
-                    ${donors[i].name}
-                </td>
+                <tr>
 
-                <td>
-                    ${donors[i].age}
-                </td>
+                    <td>
+                        ${donor.name}
+                    </td>
 
-                <td>
-                    ${donors[i].bloodGroup}
-                </td>
+                    <td>
+                        ${donor.age}
+                    </td>
 
-                <td>
-                    ${donors[i].city}
-                </td>
+                    <td>
+                        ${donor.bloodGroup}
+                    </td>
 
-                <td>
+                    <td>
+                        ${donor.city}
+                    </td>
 
-                    <a
-                        href="tel:${donors[i].phone}"
-                        class="call-button"
-                    >
-                        📞 ${donors[i].phone}
-                    </a>
+                    <td>
 
-                </td>
+                        <a
+                            href="tel:${donor.phone}"
+                            class="call-button"
+                        >
+                            📞 ${donor.phone}
+                        </a>
 
-                <td id="availability-${donors[i]._id}">
+                    </td>
 
-                    ${donors[i].availability}
+                    <td>
+                        ${donor.availability}
+                    </td>
 
-                </td>
+                    <td>
 
-                <td>
+                        <button
+                            class="edit-button"
+                            onclick="editAvailability(
+                                '${donor._id}',
+                                '${donor.availability}'
+                            )"
+                        >
+                            Edit
+                        </button>
 
-                    <button
-                        class="edit-button"
-                        onclick="editAvailability(
-                            '${donors[i]._id}',
-                            '${donors[i].availability}'
-                        )"
-                    >
-                        Edit
-                    </button>
 
-                    <button
-                        class="delete-button"
-                        onclick="deleteDonor('${donors[i]._id}')"
-                    >
-                        Delete
-                    </button>
+                        <button
+                            class="delete-button"
+                            onclick="deleteDonor(
+                                '${donor._id}'
+                            )"
+                        >
+                            Delete
+                        </button>
 
-                </td>
+                    </td>
 
-            </tr>
+                </tr>
+
+            `;
+        }
+
+
+        tableHTML += `
+
+                </tbody>
+
+            </table>
 
         `;
 
+
+        dashboardResults.innerHTML =
+            tableHTML;
+
     }
 
+    catch (error) {
 
-    table += "</table>";
+        console.error(
+            "Error loading donors:",
+            error
+        );
 
-    result.innerHTML = table;
+    }
 
 }
 
 
 
-// Edit availability
-function editAvailability(id, currentAvailability) {
-
-    const cell =
-        document.getElementById(
-            `availability-${id}`
-        );
-
-
-    cell.innerHTML = `
-
-        <select id="availability-select-${id}">
-
-            <option value="Available"
-                ${currentAvailability === "Available"
-                    ? "selected"
-                    : ""}>
-                Available
-            </option>
-
-            <option value="Not Available"
-                ${currentAvailability === "Not Available"
-                    ? "selected"
-                    : ""}>
-                Not Available
-            </option>
-
-        </select>
-
-        <br><br>
-
-        <button
-            class="save-button"
-            onclick="saveAvailability('${id}')"
-        >
-            Save
-        </button>
-
-        <button
-            class="cancel-button"
-            onclick="showDashboard()"
-        >
-            Cancel
-        </button>
-
-    `;
-
-}
-
-
-
-// Save availability
-async function saveAvailability(id) {
-
-    const select =
-        document.getElementById(
-            `availability-select-${id}`
-        );
-
+// Edit donor availability
+async function editAvailability(
+    donorId,
+    currentAvailability
+) {
 
     const newAvailability =
-        select.value;
+        prompt(
+            "Enter availability (Available / Not Available):",
+            currentAvailability
+        );
+
+
+    if (!newAvailability) {
+        return;
+    }
 
 
     try {
 
         const response =
             await fetch(
-                `${API_URL}/${id}`,
+                `${API_URL}/${donorId}`,
                 {
                     method: "PUT",
 
                     headers: {
-                        "Content-Type":
-                            "application/json"
+                        "Content-Type": "application/json"
                     },
 
                     body: JSON.stringify({
-                        availability:
-                            newAvailability
+                        availability: newAvailability
                     })
                 }
             );
@@ -292,33 +244,33 @@ async function saveAvailability(id) {
             await response.json();
 
 
-        if (!response.ok) {
+        if (data.success) {
 
             alert(
-                data.message ||
-                "Failed to update availability."
+                "Donor availability updated successfully!"
             );
 
-            return;
+            showDashboard();
 
         }
 
+        else {
 
-        alert(
-            "Availability updated successfully!"
-        );
+            alert(
+                data.message ||
+                "Failed to update availability"
+            );
 
-
-        // Reload dashboard
-        showDashboard();
+        }
 
     }
+
     catch (error) {
 
         console.error(error);
 
         alert(
-            "Unable to update availability."
+            "Something went wrong"
         );
 
     }
@@ -328,7 +280,7 @@ async function saveAvailability(id) {
 
 
 // Delete donor
-async function deleteDonor(id) {
+async function deleteDonor(donorId) {
 
     const confirmDelete =
         confirm(
@@ -345,7 +297,7 @@ async function deleteDonor(id) {
 
         const response =
             await fetch(
-                `${API_URL}/${id}`,
+                `${API_URL}/${donorId}`,
                 {
                     method: "DELETE"
                 }
@@ -356,33 +308,33 @@ async function deleteDonor(id) {
             await response.json();
 
 
-        if (!response.ok) {
+        if (data.success) {
 
             alert(
-                data.message ||
-                "Failed to delete donor."
+                "Donor deleted successfully!"
             );
 
-            return;
+            showDashboard();
 
         }
 
+        else {
 
-        alert(
-            "Donor deleted successfully!"
-        );
+            alert(
+                data.message ||
+                "Failed to delete donor"
+            );
 
-
-        // Reload dashboard
-        showDashboard();
+        }
 
     }
+
     catch (error) {
 
         console.error(error);
 
         alert(
-            "Unable to delete donor."
+            "Something went wrong"
         );
 
     }
