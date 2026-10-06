@@ -1,4 +1,3 @@
-
 // Backend URL
 const API_URL =
     "https://bloodconnect-backend-xk8k.onrender.com/api/donors";
@@ -180,6 +179,13 @@ function displayDonors(donors) {
                         Edit
                     </button>
 
+                    <button
+                        class="delete-button"
+                        onclick="deleteDonor('${donors[i]._id}')"
+                    >
+                        Delete
+                    </button>
+
                 </td>
 
             </tr>
@@ -319,3 +325,66 @@ async function saveAvailability(id) {
 
 }
 
+
+
+// Delete donor
+async function deleteDonor(id) {
+
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete this donor?"
+        );
+
+
+    if (!confirmDelete) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/${id}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.message ||
+                "Failed to delete donor."
+            );
+
+            return;
+
+        }
+
+
+        alert(
+            "Donor deleted successfully!"
+        );
+
+
+        // Reload dashboard
+        showDashboard();
+
+    }
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to delete donor."
+        );
+
+    }
+
+}

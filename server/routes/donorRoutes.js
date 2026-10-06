@@ -1,4 +1,3 @@
-
 const express = require("express");
 const Donor = require("../models/donor");
 
@@ -131,6 +130,57 @@ router.put("/:id", async (req, res) => {
             success: false,
 
             message: "Failed to update availability",
+
+            error: error.message
+
+        });
+
+    }
+
+});
+
+
+// Delete a donor
+router.delete("/:id", async (req, res) => {
+
+    try {
+
+        const donorId = req.params.id;
+
+        const deletedDonor =
+            await Donor.findByIdAndDelete(donorId);
+
+
+        if (!deletedDonor) {
+
+            return res.status(404).json({
+                success: false,
+                message: "Donor not found"
+            });
+
+        }
+
+
+        res.json({
+
+            success: true,
+
+            message: "Donor deleted successfully",
+
+            donor: deletedDonor
+
+        });
+
+    }
+    catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+
+            success: false,
+
+            message: "Failed to delete donor",
 
             error: error.message
 
