@@ -2,7 +2,7 @@
 const API_URL =
     "https://bloodconnect-backend-xk8k.onrender.com/api/donors";
 
-
+let allDashboardDonors = [];
 // Load dashboard when page opens
 showDashboard();
 
@@ -22,6 +22,7 @@ async function showDashboard() {
         }
 
         const donors = data.donors;
+allDashboardDonors = donors;
 
         const dashboardResults =
             document.getElementById("dashboardResults");
@@ -339,4 +340,24 @@ async function deleteDonor(donorId) {
 
     }
 
+}
+
+function searchDashboard() {
+    const searchText = document
+        .getElementById("dashboardSearch")
+        .value.trim().toLowerCase();
+
+    const filteredDonors = allDashboardDonors.filter(donor =>
+        (donor.name || "").toLowerCase().includes(searchText) ||
+        (donor.bloodGroup || "").toLowerCase().includes(searchText) ||
+        (donor.city || "").toLowerCase().includes(searchText) ||
+        (donor.phone || "").toLowerCase().includes(searchText)
+    );
+
+    displayDashboardSearchResults(filteredDonors);
+}
+
+function clearDashboardSearch() {
+    document.getElementById("dashboardSearch").value = "";
+    showDashboard();
 }
