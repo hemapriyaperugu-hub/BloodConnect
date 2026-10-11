@@ -819,3 +819,510 @@ footer {
     }
 
 }
+
+/* ===== BloodConnect UI Improvements ===== */
+
+body {
+    background: #f7f8fc;
+    color: #273044;
+    line-height: 1.5;
+}
+
+.navbar {
+    background: #b91c1c;
+    padding: 17px 6%;
+    box-shadow: 0 3px 12px rgba(50, 20, 20, 0.12);
+}
+
+.logo {
+    font-size: 25px;
+    white-space: nowrap;
+}
+
+.nav-links {
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    font-size: 15px;
+    transition: opacity 0.2s ease;
+}
+
+.nav-links a:hover {
+    opacity: 0.8;
+    text-decoration: none;
+}
+
+/* Dashboard layout */
+
+.dashboard-section {
+    max-width: 1450px;
+    margin: 35px auto;
+    padding: 20px 28px;
+}
+
+.dashboard-section > h1,
+.find-section h1 {
+    font-size: clamp(29px, 3vw, 38px);
+    letter-spacing: -0.5px;
+}
+
+.dashboard-intro {
+    margin-bottom: 32px;
+}
+
+.statistics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
+    margin-bottom: 38px;
+}
+
+.stat-card {
+    width: auto;
+    min-width: 0;
+    padding: 28px 18px;
+    border: 1px solid #f0edf0;
+    border-radius: 14px;
+    box-shadow: 0 5px 18px rgba(31, 41, 55, 0.07);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 9px 22px rgba(31, 41, 55, 0.10);
+}
+
+.stat-icon {
+    font-size: 32px;
+}
+
+.stat-card h2 {
+    margin-bottom: 4px;
+    font-size: 30px;
+}
+
+/* Donor list container */
+
+.dashboard-table-section {
+    padding: 28px;
+    border: 1px solid #f0edf0;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(31, 41, 55, 0.06);
+}
+
+.table-heading {
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.table-heading h2 {
+    font-size: 27px;
+}
+
+.small-button,
+.edit-button,
+.delete-button,
+.form-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.small-button {
+    padding: 11px 17px;
+    background: #b91c1c;
+    color: white;
+}
+
+.small-button:hover,
+.delete-button:hover {
+    background: #991b1b;
+}
+
+.edit-button {
+    padding: 8px 14px;
+    background: #525866;
+    color: white;
+}
+
+.edit-button:hover {
+    background: #374151;
+}
+
+.delete-button {
+    padding: 8px 14px;
+    background: #b91c1c;
+    color: white;
+}
+
+.form-button {
+    width: auto;
+    margin-top: 0;
+    padding: 12px 20px;
+    background: #b91c1c;
+    color: white;
+}
+
+.form-button:hover {
+    background: #991b1b;
+}
+
+/* Dashboard search bar */
+
+.dashboard-search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 22px;
+    flex-wrap: wrap;
+}
+
+.dashboard-search input {
+    flex: 1 1 300px;
+    width: 100%;
+    min-width: 180px;
+    max-width: 520px;
+    height: 46px;
+    padding: 0 15px;
+    border: 1px solid #d6d9e0;
+    border-radius: 8px;
+    background: #fff;
+    color: #273044;
+    font: inherit;
+    outline: none;
+}
+
+.dashboard-search input:focus {
+    border-color: #b91c1c;
+    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.10);
+}
+
+.dashboard-search .search-button {
+    min-height: 46px;
+}
+
+.dashboard-search .small-button {
+    min-height: 46px;
+    background: #f1f2f5;
+    color: #374151;
+    border: 1px solid #e0e2e7;
+}
+
+.dashboard-search .small-button:hover {
+    background: #e5e7eb;
+}
+
+/* Tables on both donor pages */
+
+#dashboardResults,
+#donorResults {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 9px;
+}
+
+.donor-table {
+    width: 100%;
+    min-width: 650px;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 9px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(31, 41, 55, 0.05);
+}
+
+.donor-table th {
+    padding: 15px 17px;
+    background: #b91c1c;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.donor-table td {
+    padding: 15px 17px;
+    border-bottom: 1px solid #eceef2;
+    color: #374151;
+    background: white;
+    vertical-align: middle;
+}
+
+.donor-table tr:last-child td {
+    border-bottom: none;
+}
+
+.donor-table tbody tr:hover td,
+.donor-table tr:hover td {
+    background: #fff7f7;
+}
+
+.donor-table a {
+    color: #b91c1c;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.donor-table a:hover {
+    text-decoration: underline;
+}
+
+.phone-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.available {
+    color: #16803d;
+    font-weight: 600;
+}
+
+.not-available {
+    color: #6b7280;
+    font-weight: 600;
+}
+
+.no-results {
+    padding: 30px 20px;
+    border: 1px solid #eceef2;
+    border-radius: 10px;
+    background: white;
+    color: #6b7280;
+    text-align: center;
+}
+
+/* Find Donor search area */
+
+.find-section {
+    max-width: 1250px;
+    margin: 40px auto;
+    padding: 20px 28px;
+}
+
+.search-box {
+    align-items: end;
+    gap: 16px;
+    padding: 25px;
+    border: 1px solid #f0edf0;
+    border-radius: 13px;
+    box-shadow: 0 5px 18px rgba(31, 41, 55, 0.06);
+}
+
+.search-box input,
+.search-box select {
+    min-height: 46px;
+    border-color: #d6d9e0;
+    border-radius: 8px;
+}
+
+.search-box input:focus,
+.search-box select:focus {
+    border-color: #b91c1c;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.10);
+}
+
+.results-heading {
+    margin: 0 0 18px;
+    font-size: 23px;
+}
+
+/* Other pages */
+
+.form-section,
+.about-card,
+.about-info {
+    border: 1px solid #f0edf0;
+    box-shadow: 0 5px 18px rgba(31, 41, 55, 0.06);
+}
+
+footer {
+    margin-top: 45px;
+    background: #831919;
+}
+
+/* Responsive layout */
+
+@media (max-width: 900px) {
+    .statistics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .nav-links {
+        justify-content: center;
+        gap: 14px 20px;
+    }
+
+    .search-box {
+        flex-wrap: wrap;
+    }
+
+    .search-box > div {
+        flex: 1 1 220px;
+    }
+}
+
+@media (max-width: 600px) {
+    .dashboard-section,
+    .find-section {
+        margin: 22px auto;
+        padding: 14px;
+    }
+
+    .statistics {
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+
+    .stat-card {
+        padding: 20px 10px;
+    }
+
+    .stat-card h2 {
+        font-size: 27px;
+    }
+
+    .stat-card p {
+        font-size: 14px;
+    }
+
+    .dashboard-table-section {
+        padding: 16px;
+    }
+
+    .table-heading {
+        align-items: stretch;
+    }
+
+    .table-heading h2 {
+        font-size: 23px;
+    }
+
+    .dashboard-search {
+        align-items: stretch;
+    }
+
+    .dashboard-search input {
+        flex-basis: 100%;
+        max-width: none;
+    }
+
+    .dashboard-search .search-button,
+    .dashboard-search .small-button {
+        flex: 1;
+    }
+
+    .search-box {
+        padding: 18px;
+    }
+
+    .search-box .search-button {
+        width: 100%;
+    }
+
+    .logo {
+        font-size: 23px;
+    }
+
+    .nav-links a {
+        font-size: 14px;
+    }
+}
+
+/* Dashboard search redesign */
+.dashboard-search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 24px;
+    padding: 16px;
+    background: #fff8f8;
+    border: 1px solid #f3dddd;
+    border-radius: 12px;
+}
+
+.dashboard-search input {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+    height: 46px;
+    padding: 0 16px;
+    border: 1px solid #d7dce3;
+    border-radius: 8px;
+    background: white;
+    font-size: 15px;
+    outline: none;
+}
+
+.dashboard-search input:focus {
+    border-color: #b91c1c;
+    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.1);
+}
+
+.dashboard-search .search-button,
+.dashboard-search .small-button {
+    width: auto;
+    min-height: 46px;
+    margin: 0;
+    padding: 0 22px;
+    white-space: nowrap;
+}
+
+.dashboard-search .small-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    color: #b91c1c;
+    border: 1px solid #b91c1c;
+    border-radius: 7px;
+}
+
+.dashboard-search .small-button:hover {
+    background: #fce8e8;
+}
+
+.call-button {
+    color: #b91c1c;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.call-button:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .dashboard-search {
+        flex-wrap: wrap;
+        padding: 12px;
+    }
+
+    .dashboard-search input {
+        flex-basis: 100%;
+    }
+
+    .dashboard-search .search-button,
+    .dashboard-search .small-button {
+        flex: 1;
+        padding: 0 12px;
+    }
+}
